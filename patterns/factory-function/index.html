@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Factory Function Practical Example</title>
+  </head>
+  <body>
+    <form>
+      <input type="text" placeholder="counter name" />
+      <input type="number" placeholder="counter initial value" />
+      <button type="submit">Create Counter</button>
+    </form>
+    <div class="container"></div>
+
+    <script>
+      let idPointer = 1;
+      const counters = [];
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = e.target.children[0].value;
+        const initialValue = parseInt(e.target.children[1].value, 10);
+
+        const counter = createCounter(name, initialValue);
+        counters.push(counter);
+        renderCounter(counter);
+
+        e.target.reset();
+      });
+
+      // ===================== Factory Function =====================
+      function createCounter(name, initialValue) {
+        return {
+          id: idPointer++,
+          name,
+          value: initialValue,
+          increment() {
+            this.value++;
+            renderCounter(this);
+          },
+          decrement() {
+            this.value--;
+            renderCounter(this);
+          },
+          reset() {
+            this.value = 0;
+            renderCounter(this);
+          },
+        };
+      }
+
+      function renderCounter(counter) {
+        const existingCounter = document.getElementById(counter.id);
+
+        if (!existingCounter) {
+          // new counter
+          console.log("new counter");
+          const container = document.querySelector(".container");
+          const counterContainer = document.createElement("div");
+          const counterName = document.createElement("h2");
+          const counterValue = document.createElement("h3");
+          const counterIncrement = document.createElement("button");
+          const counterDecrement = document.createElement("button");
+          const counterReset = document.createElement("button");
+
+          counterContainer.classList.add("counter");
+          counterContainer.setAttribute("id", counter.id);
+
+          counterName.textContent = counter.name;
+          counterValue.textContent = counter.value;
+          counterIncrement.textContent = "Increment";
+          counterDecrement.textContent = "Decrement";
+          counterReset.textContent = "Reset";
+
+          counterIncrement.addEventListener("click", () => {
+            counter.increment();
+          });
+
+          counterDecrement.addEventListener("click", () => {
+            counter.decrement();
+          });
+
+          counterReset.addEventListener("click", () => {
+            counter.reset();
+          });
+
+          counterContainer.appendChild(counterName);
+          counterContainer.appendChild(counterValue);
+          counterContainer.appendChild(counterIncrement);
+          counterContainer.appendChild(counterDecrement);
+          counterContainer.appendChild(counterReset);
+          container.appendChild(counterContainer);
+        } else {
+          // existing counter
+          const counterContainer = document.getElementById(counter.id);
+          const counterValue = counterContainer.querySelector("h3");
+          counterValue.textContent = counter.value;
+        }
+      }
+    </script>
+  </body>
+</html>
