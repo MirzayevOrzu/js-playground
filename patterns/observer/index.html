@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Observer Pattern Practical Example</title>
+  </head>
+  <body>
+    <div id="counter-example">
+      <h2 id="count">0</h2>
+      <button id="increment">+</button>
+      <button id="decrement">-</button>
+    </div>
+
+    <script>
+      class Observable {
+        constructor() {
+          this.subscribers = [];
+        }
+
+        subscribe(fn) {
+          this.subscribers.push(fn);
+        }
+
+        unsubscribe(fn) {
+          this.subscribers = this.subscribers.filter((item) => item !== fn);
+        }
+
+        fire(data) {
+          for (let i = 0; i < this.subscribers.length; i++) {
+            this.subscribers[i](data);
+          }
+        }
+      }
+
+      const observer = new Observable();
+
+      const callback = (count) => {
+        document.getElementById("count").innerHTML = count;
+      };
+
+      observer.subscribe(callback);
+
+      document.getElementById("increment").addEventListener("click", () => {
+        observer.fire(parseInt(document.getElementById("count").innerHTML) + 1);
+      });
+
+      document.getElementById("decrement").addEventListener("click", () => {
+        observer.fire(parseInt(document.getElementById("count").innerHTML) - 1);
+      });
+    </script>
+  </body>
+</html>
