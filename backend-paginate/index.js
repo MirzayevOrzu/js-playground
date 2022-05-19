@@ -11,6 +11,7 @@ app.use(generateFullUrl);
 
 app.get('/cars', async (req, res) => {
   const per_page = parseInt(req.query.per_page) || 10;
+  const pl = parseInt(req.query.pl) || 5;
   const total = +(await client.query('SELECT COUNT(*) FROM car')).rows[0].count;
   const current_page = parseInt(req.query.page) || 1;
   const offset = (current_page - 1) * per_page;
@@ -21,7 +22,7 @@ app.get('/cars', async (req, res) => {
   ]);
 
   res.json({
-    paginator: paginator(total, per_page, current_page, req.fullUrl),
+    paginator: paginator(total, per_page, current_page, req.fullUrl, pl),
     cars: cars.rows,
   });
 });
