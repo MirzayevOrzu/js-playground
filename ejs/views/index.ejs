@@ -1,0 +1,23 @@
+<!-- Injecting values into views -->
+<li>The message is "<%= message %>"</li>
+<li>The value is <%= value %></li>
+<li>The isProduction is <%= isProduction %></li>
+<li>The person's first name is <%= person.firstName %></li>
+<li>And person's last name is <%= person.lastName %></li>
+
+<!-- For loops and arrays -->
+<% for(let car of cars) { %>
+<li>The model of car is <%= car.model %> of year <%= car.year %></li>
+<% } %>
+
+<!-- If/Else statement -->
+<% if(person.gender === 'Male') { %>
+<p>
+  <%= person.firstName %> is really awesome. He is <%= person.age %> years old
+</p>
+<% } else if (person.gender === 'Female') {%>
+<p>
+  <%= person.firstName %> is really beautifull, She is <%= person.age %> years
+  old
+</p>
+<% } %>
