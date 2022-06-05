@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Register</title>
+    <style>
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Register</h1>
+    <form action="/register" method="post">
+      <label for="username">Username: </label>
+      <input type="text" name="username" />
+      <label for="email">Email: </label>
+      <input type="email" name="email" />
+      <label for="password">Password: </label>
+      <input type="password" name="password" />
+      <button type="submit">Register</button>
+    </form>
+  </body>
+</html>
