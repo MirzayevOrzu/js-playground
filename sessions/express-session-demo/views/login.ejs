@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <style>
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form action="/login" method="post" autocomplete="off">
+      <label for="email">Email: </label>
+      <input type="email" name="email" />
+      <label for="password">Password: </label>
+      <input type="password" name="password" />
+      <button type="submit">Login</button>
+    </form>
+    <a href="/register">Register</a>
+  </body>
+</html>
