@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="my-id"></h1>
+    <button id="connect">Connect</button>
+    <button id="greet">Connect</button>
+    <input type="number" id="to-client" />
+    <input type="text" id="message" />
+    <button id="chat">Sned</button>
+    <script>
+      const h1 = document.getElementById('my-id');
+      const connectBtn = document.getElementById('connect');
+      const greetBtn = document.getElementById('greet');
+      const chatBtn = document.getElementById('chat');
+      const clientInput = document.getElementById('to-client');
+      const messageInput = document.getElementById('message');
+      let ws;
+
+      connectBtn.addEventListener('click', (e) => {
+        ws = new WebSocket('ws://localhost:3001', 'echo-protocol');
+
+        if (ws.OPEN) {
+          alert('Connection is open');
+        } else {
+          alert('Connection is NOT open');
+        }
+
+        ws.onmessage = (message) => {
+          const payload = JSON.parse(message.data);
+
+          switch (payload.event) {
+            case 'salam':
+              alert(`Server is saying ${payload.data}`);
+              break;
+            case 'join_user':
+              alert(`New user joined with ID of ${payload.data.id}`);
+              break;
+            case 'accept':
+              h1.innerText = `MY WS ID IS ${payload.data.id}`;
+              break;
+            case 'one-to-one':
+              alert(
+                `USER OF ID ${payload.data.id} says ${payload.data.message}`
+              );
+              break;
+            default:
+              break;
+          }
+        };
+      });
+      greetBtn.addEventListener('click', () => {
+        if (ws && ws.OPEN) {
+          ws.send(JSON.stringify({ event: 'salam', data: 'Salom, salom' }));
+        }
+      });
+      chatBtn.addEventListener('click', (e) => {
+        const userId = clientInput.value;
+        const message = messageInput.value;
+        ws.send(
+          JSON.stringify({ event: 'one-to-one', data: { id: +userId, message } })
+        );
+      });
+    </script>
+  </body>
+</html>

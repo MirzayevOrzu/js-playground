@@ -1,0 +1,20 @@
+{
+  "name": "2.chat-app",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "websocket": "^1.0.34"
+  },
+  "devDependencies": {
+    "@types/websocket": "^1.0.5"
+  }
+}
